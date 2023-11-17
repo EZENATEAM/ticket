@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.spring.domain.Authority"		alias="Authority"		/>
+		<typeAlias type="com.spring.domain.EventVo"			alias="EventVo"			/>
+		<typeAlias type="com.spring.domain.FestivalVo"		alias="FestivalVo"		/>
+		<typeAlias type="com.spring.domain.ImageVo"			alias="ImageVo"			/>
+		<typeAlias type="com.spring.domain.rawVo"			alias="rawVo"			/>
+		<typeAlias type="com.spring.domain.ReplyVo"			alias="ReplyVo"			/>
+		<typeAlias type="com.spring.domain.ReservationVo"	alias="ReservationVo"	/>
+		<typeAlias type="com.spring.domain.UserVo"			alias="userVo"			/>
+		<typeAlias type="com.spring.domain.Search"			alias="Search"			/>
+	</typeAliases>
+</configuration>

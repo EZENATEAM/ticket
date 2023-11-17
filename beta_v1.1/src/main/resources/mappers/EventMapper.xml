@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.Event">
+	<insert id="insert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idx" >
+		insert into Event ( eDate, eTime, eTerm, eTitle, eNote, ePlace, eSeats, etc, fIdx, aIdx )
+		 values
+		<foreach collection="list" item="item" separator=",">
+			( #{item.eDate}, #{item.eTime}, #{item.eTerm}, #{item.eTitle}, #{item.eNote}, #{item.ePlace}, #{item.eSeats}, #{item.etc}, #{item.fIdx}, #{item.aIdx} )
+		</foreach>
+	</insert>
+	<select id="select" parameterType="Long" resultType="EventVo" >
+		SELECT * FROM Event WHERE idx = #{idx}
+	</select>
+	<update id="update" parameterType="EventVo">
+		UPDATE Event
+		<set>
+			<if test='eDate neq null and eDate neq ""'>
+				 eDate =#{eDate},
+			</if>
+			<if test='eTime neq null and eTime neq ""'>
+				 eTime =#{eTime},
+			</if>
+			<if test='eTerm neq null and eTerm neq ""'>
+				 eTerm =#{eTerm},
+			</if>
+			<if test='eTitle neq null and eTitle neq ""'>
+				 eTitle =#{eTitle},
+			</if>
+			<if test='eNote neq null and eNote neq ""'>
+				 eNote =#{eNote},
+			</if>
+			<if test='ePlace neq null and ePlace neq ""'>
+				 ePlace =#{ePlace},
+			</if>
+			<if test='eSeats neq null and eSeats neq ""'>
+				 eSeats =#{eSeats},
+			</if>
+			<if test='etc neq null and etc neq ""'>
+				 etc =#{etc},
+			</if>
+			<if test='fIdx neq null and fIdx neq ""'>
+				 fIdx =#{fIdx},
+			</if>
+			<if test='aIdx neq null and aIdx neq ""'>
+				 aIdx =#{aIdx},
+			</if>
+		</set>
+		 WHERE
+			 idx = #{idx}
+	</update>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM Event WHERE idx = #{idx}
+	</delete>
+	<delete id="deleteAll" parameterType="Long">
+		DELETE FROM Event WHERE fIdx = #{fIdx}
+	</delete>
+	<select id="list" parameterType="Long" resultType="EventVo" >
+		SELECT * FROM Event WHERE fIdx = #{fIdx}
+	</select>
+</mapper>

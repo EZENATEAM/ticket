@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.Authority">
+	<insert id="insert" parameterType="Authority" useGeneratedKeys="true" keyProperty="idx" >
+		insert into authorities ( uIdx, ROLE ) values ( #{ uIdx }, #{ ROLE } )
+	</insert>
+	<select id="select" parameterType="Long" resultType="Authority" >
+		SELECT * FROM authorities WHERE uIdx = #{uIdx}
+	</select>
+	<update id="update" parameterType="Authority">
+		UPDATE authorities SET uIdx = #{uIdx}, ROLE = #{ROLE} WHERE idx = #{idx}
+	</update>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM authorities WHERE uIdx = #{idx}
+	</delete>
+</mapper>

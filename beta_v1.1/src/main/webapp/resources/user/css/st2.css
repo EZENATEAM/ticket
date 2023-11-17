@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+	    /* 나머지 행의 가로줄 숨김 */
+	    .table-container table tr:not(:last-child) {
+	        border-bottom: none;
+	    }
+	
+	    /* 테이블 셀 내부 내용을 가운데 정렬 */
+	    .table-container table td {
+	        text-align: center;
+	        border-bottom: none;
+	    }
+	    
+	    /* 로그인 버튼 스타일 */
+		#loginbtn {
+		    background-color: #808080;
+		    color: #fff;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background-color 0.3s ease; /* 배경색 변화에 애니메이션 추가 */
+		}
+		
+		#loginbtn:hover {
+		    background-color: #000000; /* 호버 상태일 때 배경색 변경 */
+		}
+		
+		 /* 로그인 버튼 스타일 */
+		.loginbtn {
+		    background-color: #808080;
+		    color: #fff;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background-color 0.3s ease; /* 배경색 변화에 애니메이션 추가 */
+		}
+		
+		.loginbtn:hover {
+		    background-color: #000000; /* 호버 상태일 때 배경색 변경 */
+		}

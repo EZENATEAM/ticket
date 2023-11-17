@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.API">
+	<insert id="insert" parameterType="rawVo" useGeneratedKeys="true" keyProperty="idx" >
+		insert into raw ( 
+			 wDate, 
+			 status, 
+			 title, 
+			 alternativeTitle, 
+			 creator, 
+			 regDate, 
+			 collectionDb, 
+			 subjectCategory, 
+			 subjectKeyword, 
+			 extent, 
+			 description, 
+			 spatialCoverage, 
+			 temporalCoverage, 
+			 person, 
+			 language, 
+			 sourceTitle, 
+			 referenceIdentifier, 
+			 rights, 
+			 copyrightOthers, 
+			 url, 
+			 contributor
+			)
+		 values (
+			 now(), 
+			 'N', 
+			 #{title}, 
+			 #{alternativeTitle}, 
+			 #{creator}, 
+			 #{regDate}, 
+			 #{collectionDb}, 
+			 #{subjectCategory}, 
+			 #{subjectKeyword}, 
+			 #{extent}, 
+			 #{description}, 
+			 #{spatialCoverage}, 
+			 #{temporalCoverage}, 
+			 #{person}, 
+			 #{language}, 
+			 #{sourceTitle}, 
+			 #{referenceIdentifier}, 
+			 #{rights}, 
+			 #{copyrightOthers}, 
+			 #{url}, 
+			 #{contributor} 
+			)
+	</insert>
+	<select id="select" parameterType="Long" resultType="rawVo" >
+		SELECT * FROM raw WHERE idx = #{idx}
+	</select>
+	<select id="count" parameterType="Long" resultType="int" >
+		SELECT count(*) FROM raw
+	</select>
+	<select id="list" parameterType="int" resultType="rawVo" >
+<!-- 		SELECT * FROM raw where referenceIdentifier IS NOT NULL order by idx DESC limit 0, 10 -->
+		SELECT * FROM raw where sourceTitle IS NOT NULL order by idx DESC limit #{length, jdbcType=INTEGER}, 10
+	</select>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM raw WHERE idx = #{idx}
+	</delete>
+	<update id="update" parameterType="rawVo">
+		UPDATE raw SET
+			 wDate = #{wDate},
+			 status = #{status},
+			 title = #{title},
+			 alternativeTitle = #{alternativeTitle},
+			 creator = #{creator},
+			 regDate = #{regDate},
+			 collectionDb = #{collectionDb},
+			 subjectCategory = #{subjectCategory},
+			 subjectKeyword = #{subjectKeyword},
+			 extent = #{extent},
+			 description = #{description},
+			 spatialCoverage = #{spatialCoverage},
+			 temporalCoverage = #{temporalCoverage},
+			 person = #{person},
+			 language = #{language},
+			 sourceTitle = #{sourceTitle},
+			 referenceIdentifier = #{referenceIdentifier},
+			 rights = #{rights},
+			 copyrightOthers = #{copyrightOthers},
+			 url = #{url},
+			 contributor = #{contributor}
+		 WHERE
+			 idx = #{idx}
+	</update>
+</mapper>

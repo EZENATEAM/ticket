@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.User">
+	<!-- 유저 등록 -->
+	<insert id="insert" parameterType="userVo" useGeneratedKeys="true" keyProperty="idx" >
+		INSERT INTO User 
+			 ( ID, PASSWORD, NAME, birth, tel, EMAIL, uStat, jDate) 
+		 VALUES 
+			 ( #{ID}, #{PASSWORD}, #{NAME}, #{birth}, #{tel}, #{EMAIL}, 'A', now() ) 
+	</insert>
+	
+	<!-- 관리번호로 읽어오기 -->
+	<select id="select" parameterType="Long" resultType="userVo" >
+		SELECT * FROM User WHERE idx = #{idx}
+	</select>
+	
+	<!-- 값이 있는 항목 업데이트 -->
+	<update id="update" parameterType="userVo">
+		UPDATE 
+			 User 
+		<set>
+			<if test='ID neq null and ID neq ""'>
+				 ID = #{ID}, 
+			</if>
+			<if test='PASSWORD neq null and PASSWORD neq ""'>
+				 PASSWORD = #{password}, 
+			</if>
+			<if test='NAME neq null and NAME neq ""'>
+				 NAME = #{NAME},
+			</if>
+			<if test='birth neq null and birth neq ""'>
+				 birth = #{birth}, 
+			</if>
+			<if test='tel neq null and tel neq ""'>
+				 tel= #{tel}, 
+			</if>
+			<if test='EMAIL neq null and EMAIL neq ""'>
+				 EMAIL = #{EMAIL}, 
+			</if>
+			<if test='uStat neq null and uStat neq ""'>
+				 uStat= #{uStat}, 
+			</if>
+		</set> 
+		 WHERE 
+			 idx = #{idx}
+	</update>
+	
+	<!-- 관리번호로 삭제 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM User WHERE idx = #{idx}
+	</delete>
+	<!-- 관리번호로 찾기 -->
+	<select id="findOne" parameterType="Long" resultType="userVo" >
+		SELECT * FROM User WHERE idx = #{idx}
+	</select>
+	<!-- ID로 찾기 -->
+	<select id="findByID" parameterType="String" resultType="userVo" >
+		SELECT * FROM User WHERE ID = #{ID}
+	</select>
+	<!-- 이메일로 찾기 -->
+	<select id="findByEmail" parameterType="String" resultType="userVo" >
+		SELECT * FROM User WHERE EMAIL = #{EMAIL}
+	</select>
+	
+	<!-- ID 찾기용 :: 이름과 이메일이 일치하는 계정을 찾는다 -->
+	<select id="findByName" parameterType="userVo" resultType="userVo" >
+		SELECT * FROM User 
+			 WHERE NAME = #{NAME} 
+			 AND EMAIL = #{EMAIL} 
+	</select>
+	
+	<!-- 검색으로 목록 만들기 -->
+	<select id="list" parameterType="Search" resultType="userVo" >
+		SELECT * FROM User 
+		 <if test='key neq null and key neq ""'>
+			 WHERE ${key} like CONCAT('%',#{value},'%') 
+		 </if>
+		 <if test='order neq null and order neq ""'>
+			 order by #{order} #{sort}
+		 </if>
+			 limit ${offset}, ${perPage}
+	</select>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.Festival">
+	<insert id="insert" parameterType="FestivalVo" useGeneratedKeys="true" keyProperty="idx" >
+		insert into Festival (
+			 wDate, status, 
+			 title, note, addr, startDate, endDate, fTel, location, 
+			 rIdx, aIdx )
+		 values
+			( now(), 'N', 
+			 #{title}, #{note}, #{addr}, #{startDate}, #{endDate}, #{fTel}, #{location}, 
+			 #{rIdx}, #{aIdx} )
+	</insert>
+	<select id="select" parameterType="Long" resultType="FestivalVo" >
+		SELECT * FROM Festival WHERE idx = #{idx}
+	</select>
+	<update id="update" parameterType="FestivalVo">
+		UPDATE Festival
+		<set>
+			<if test='wDate eq null and wDate eq ""'>
+			 wDate = now(),
+			</if>
+			<if test='wDate neq null and wDate neq ""'>
+			 wDate = #{wDate},
+			</if>
+			<if test='status neq null and status neq ""'>
+			 status = #{status},
+			</if>
+			<if test='title neq null and title neq ""'>
+			 title = #{title},
+			</if>
+			<if test='note neq null and note neq ""'>
+			 note = #{note},
+			</if>
+			<if test='addr neq null and addr neq ""'>
+			 addr = #{addr},
+			</if>
+			<if test='startDate neq null and startDate neq ""'>
+			 startDate = #{startDate},
+			</if>
+			<if test='endDate neq null and endDate neq ""'>
+			 endDate = #{endDate},
+			</if>
+			<if test='fTel neq null and fTel neq ""'>
+			 fTel = #{fTel},
+			</if>
+			<if test='location neq null and location neq ""'>
+			 location = #{location},
+			</if>
+			<if test='rIdx neq null and rIdx neq ""'>
+			 rIdx = #{rIdx},
+			</if>
+			<if test='aIdx neq null and aIdx neq ""'>
+			 aIdx = #{aIdx},
+			</if>
+		</set>
+		 WHERE
+			 idx = #{idx}
+	</update>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM Festival WHERE idx = #{idx}
+	</delete>
+	<select id="findByRaw" parameterType="Long" resultType="FestivalVo" >
+		SELECT * FROM Festival WHERE rIdx = #{rIdx}
+	</select>
+	<!-- 검색으로 목록 생성 -->
+	<select id="list" parameterType="Search" resultType="FestivalVo" >
+		SELECT * FROM Festival
+		 <if test='key neq null and key neq ""'>
+			 WHERE ${key} like CONCAT('%',#{value},'%') 
+		 </if>
+		<choose>
+			<when test='order neq null and order neq ""'>
+				 order by #{order} #{sort} 
+			</when>
+			<otherwise>
+				 order by idx DESC 
+			</otherwise>
+		</choose>
+			 limit ${offset}, ${perPage}
+	</select>
+	<!-- 외부사용자용 검색 / 노출 설정이 'A'인 축제만 가져옴 -->
+	<select id="list_active" parameterType="Search" resultType="FestivalVo" >
+		SELECT * FROM Festival
+			 WHERE status = 'A'
+		<if test='key neq null and key neq ""'>
+			 and ${key} like CONCAT('%',#{value},'%') 
+		</if>
+		<choose>
+			<when test='order neq null and order neq ""'>
+				 order by #{order} #{sort} 
+			</when>
+			<otherwise>
+				 order by idx DESC 
+			</otherwise>
+		</choose>
+			 limit ${offset}, ${perPage} 
+	</select>
+	<!-- 전체 데이터 개수 반환 -->
+	<select id="count_All" resultType="int" >
+		SELECT count(*) FROM Festival
+	</select>
+	<!-- 외부 사용자용 데이터 개수 반환 -->
+	<select id="count_Active" resultType="int" >
+		SELECT count(*) FROM Festival WHERE status = 'A'
+	</select>
+</mapper>

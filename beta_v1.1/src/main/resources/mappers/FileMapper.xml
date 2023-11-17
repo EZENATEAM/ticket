@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.File">
+	<!-- 이미지 그룹을 생성 후 -->
+	<insert id="mk_list" parameterType="ImageVo" useGeneratedKeys="true" keyProperty="aIdx" >
+		insert into ImgList () values ();
+	</insert>
+	<!-- 이미지 목록을 기록 -->
+	<insert id="insert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idx" >
+		insert into Image
+			 ( fileName, oriName, aIdx )
+		values
+		<foreach collection="list" item="item" separator=",">
+			 ( #{item.fileName}, #{item.oriName}, #{item.aIdx} )
+		</foreach>
+	</insert>
+	<select id="select" parameterType="Long" resultType="ImageVo" >
+		SELECT * FROM ImgList WHERE idx = #{idx}
+	</select>
+	<select id="list" parameterType="Long" resultType="ImageVo" >
+		SELECT * FROM ImgList WHERE aIdx = #{aIdx}
+	</select>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM Image WHERE idx = #{idx}
+	</delete>
+	<delete id="deleteAll" parameterType="Long">
+		DELETE
+			 i, l 
+		 from
+			 Image as i join ImgList as l on i.aIdx = l.idx 
+		 where 
+			 l.idx = #{idx}
+	</delete>
+</mapper>

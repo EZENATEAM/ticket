@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.Reply">
+	<insert id="insert" parameterType="ReplyVo" useGeneratedKeys="true" keyProperty="idx" >
+		insert into Reply ( note, wDate, fIdx, uIdx ) 
+		 values ( #{note}, now(), #{fIdx}, #{uIdx} )
+	</insert>
+	<select id="select" parameterType="Long" resultType="ReplyVo" >
+		SELECT * FROM Reply WHERE idx = #{idx}
+	</select>
+	<update id="update" parameterType="ReplyVo">
+		UPDATE ReplyVo
+		<set>
+			<if test='wDate eq null and wDate eq ""'>
+				wDate = now(),
+			</if>
+			<if test='wDate neq null and wDate neq ""'>
+				wDate = #{wDate},
+			</if>
+			<if test='note neq null and note neq ""'>
+				 note = #{note},
+			</if>
+			<if test='wDate neq null and wDate neq ""'>
+				 wDate = now(),
+			</if>
+			<if test='fIdx neq null and fIdx neq ""'>
+				 fIdx = #{fIdx},
+			</if>
+			<if test='uIdx neq null and uIdx neq ""'>
+				 uIdx = #{uIdx},
+			</if>
+		</set>
+		 WHERE
+			 idx = #{idx}
+	</update>
+	<!-- 리뷰 단건 삭제 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM ReplyVo WHERE idx = #{idx}
+	</delete>
+	<!-- 축제번호로 축제의 모든 리뷰 삭제 -->
+	<delete id="deleteAll" parameterType="Long">
+		DELETE FROM ReplyVo WHERE fIdx = #{fIdx}
+	</delete>
+	<!-- 축제번호로 리뷰 목록 -->
+	<select id="ReplyList" parameterType="Long" resultType="ReplyVo" >
+		SELECT * FROM ReplyVo WHERE fIdx = #{fIdx} 
+	</select>
+	<!-- 리뷰 검색 -->
+	<select id="list" parameterType="Search" resultType="ReplyVo" >
+		SELECT * FROM ReplyVo
+		 <if test='key neq null and key neq ""'>
+			 WHERE ${key} like CONCAT('%',#{value},'%') 
+		 </if>
+		 <choose>
+			 <when test='order neq null and order neq ""'>
+				 order by ${order} ${sort}
+			 </when>
+			 <otherwise>
+				 order by idx DESC
+			 </otherwise>
+		 </choose>
+			 limit ${offset}, ${perPage}
+	</select>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.Raw">
+	<!-- 리스트로 넘어온 데이터 넣기 -->
+	<insert id="insert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idx" >
+		insert into raw
+			 ( wDate, status, 
+			 title, alternativeTitle, creator, regDate, collectionDb, subjectCategory, subjectKeyword, extent, description, spatialCoverage, temporalCoverage, person, language, sourceTitle, referenceIdentifier, rights, copyrightOthers, url, contributor )
+		 values
+		<foreach collection="list" item="item" separator=",">
+			 ( now(), 'N',
+			 #{item.title}, #{item.alternativeTitle}, #{item.creator}, #{item.regDate}, #{item.collectionDb}, #{item.subjectCategory}, #{item.subjectKeyword}, #{item.extent}, #{item.description}, #{item.spatialCoverage}, #{item.temporalCoverage}, #{item.person}, #{item.language}, #{item.sourceTitle}, #{item.referenceIdentifier}, #{item.rights}, #{item.copyrightOthers}, #{item.url}, #{item.contributor} )
+		</foreach>
+	</insert>
+	<!-- 관리번호로 찾기 -->
+	<select id="select" parameterType="Long" resultType="rawVo" >
+		SELECT * FROM raw WHERE idx = #{idx}
+	</select>
+	<!-- 값이 있는 항목 업데이트 -->
+	<update id="update" parameterType="rawVo">
+		UPDATE raw
+		<set>
+			<if test='wDate eq null and wDate eq ""'>
+			 wDate = now(), 
+			</if>
+			<if test='wDate neq null and wDate neq ""'>
+			 wDate = #{wDate}, 
+			</if>
+			<if test='status neq null and status neq ""'>
+			 status = #{status}, 
+			</if>
+			<if test='title neq null and title neq ""'>
+			 title = #{title}, 
+			</if>
+			<if test='alternativeTitle neq null and alternativeTitle neq ""'>
+			 alternativeTitle = #{alternativeTitle}, 
+			</if>
+			<if test='creator neq null and creator neq ""'>
+			 creator = #{creator}, 
+			</if>
+			<if test='regDate neq null and regDate neq ""'>
+			 regDate = #{regDate}, 
+			</if>
+			<if test='collectionDb neq null and collectionDb neq ""'>
+			 collectionDb = #{collectionDb}, 
+			</if>
+			<if test='subjectCategory neq null and subjectCategory neq ""'>
+			 subjectCategory = #{subjectCategory}, 
+			</if>
+			<if test='subjectKeyword neq null and subjectKeyword neq ""'>
+			 subjectKeyword = #{subjectKeyword}, 
+			</if>
+			<if test='extent neq null and extent neq ""'>
+			 extent = #{extent}, 
+			</if>
+			<if test='description neq null and description neq ""'>
+			 description = #{description}, 
+			</if>
+			<if test='spatialCoverage neq null and spatialCoverage neq ""'>
+			 spatialCoverage = #{spatialCoverage}, 
+			</if>
+			<if test='temporalCoverage neq null and temporalCoverage neq ""'>
+			 temporalCoverage = #{temporalCoverage}, 
+			</if>
+			<if test='person neq null and person neq ""'>
+			 person = #{person}, 
+			</if>
+			<if test='language neq null and language neq ""'>
+			 language = #{language}, 
+			</if>
+			<if test='sourceTitle neq null and sourceTitle neq ""'>
+			 sourceTitle = #{sourceTitle}, 
+			</if>
+			<if test='referenceIdentifier neq null and referenceIdentifier neq ""'>
+			 referenceIdentifier = #{referenceIdentifier}, 
+			</if>
+			<if test='rights neq null and rights neq ""'>
+			 rights = #{rights}, 
+			</if>
+			<if test='copyrightOthers neq null and copyrightOthers neq ""'>
+			 copyrightOthers = #{copyrightOthers}, 
+			</if>
+			<if test='url neq null and url neq ""'>
+			 url = #{url}, 
+			</if>
+			<if test='contributor neq null and contributor neq ""'>
+			 contributor = #{contributor}, 
+			</if>
+		</set>
+		 WHERE
+			 idx = #{idx}
+	</update>
+	<!-- 관리번호로 삭제 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM raw WHERE idx = #{idx}
+	</delete>
+	
+	<select id="list" parameterType="Search" resultType="rawVo" >
+<!-- 		SELECT * FROM raw where referenceIdentifier IS NOT NULL order by idx DESC limit 0, 10 -->
+		SELECT * FROM raw
+		 <if test='key neq null and key neq ""'>
+			 WHERE ${key} like CONCAT('%',#{value},'%') 
+		 </if>
+		 <choose>
+			 <when test='order neq null and order neq ""'>
+				 order by ${order} ${sort}
+			 </when>
+			 <otherwise>
+				 order by idx DESC
+			 </otherwise>
+		 </choose>
+			 limit ${offset}, ${perPage}
+	</select>
+	<!-- 전체 데이터 개수 반환 -->
+	<select id="count" parameterType="Long" resultType="int" >
+		SELECT count(*) FROM raw
+	</select>
+</mapper>

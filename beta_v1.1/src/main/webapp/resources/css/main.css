@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+
+		body {
+			height: 100%;
+			overflow-y: scroll;
+		}
+		
+		hr {
+		    margin: 10px 0; /* hr의 위아래 마진을 추가하여 여백을 확보 */
+		}
+		
+		footer {
+		    background-color: #f8f8f8;
+		    padding: 20px 0;
+		    text-align: center;
+		    width: 100%;
+		    height: 30px
+		    margin-top: auto;
+   			bottom: 0;
+		}
+		
+		.wrap {
+			min-height: calc(90vh - 30px);
+			padding-top: 10px;
+		}
+		
+				
+		.center-align {
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: center;
+		    align-items: center;
+		    text-align: center;
+		}
+		
+        .right-align {text-align: right; margin-right: 50px; margin-top: 20px;}
+        .table-container { margin: 0 auto; /* 가운데 정렬을 위한 스타일 */ 
+        }
+        .table-container table {
+            width: 80%; /* 테이블의 너비를 조정 */
+            margin: 0 auto; /* 테이블을 가운데 정렬 */
+            border-collapse: collapse; /* 테이블 셀 경계를 합칩니다 */
+        }
+        .table-container td {
+            padding: 10px;
+            text-align: left; /* 텍스트를 왼쪽 정렬 */
+            border-bottom: 1px solid #ccc;
+        }
+        
+        #searchbar {
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+		}
+
+        #searchbar input[type="text"] {
+	    width: 300px; /* 너비 조정 */
+	    height: 40px; /* 높이 조정 */
+	    font-size: 16px; /* 글꼴 크기 조정 */
+	    display: inline;
+	    border-radius: 5px 0 0 5px; /* 왼쪽 부분을 둥글게 만듦 */
+	    border: 1px solid #ccc;
+	    padding: 0 10px;
+		}
+		
+		#searchbar input[type="submit"] {
+	    height: 40px;
+	    font-size: 16px;
+	    border: none;
+	    background-color: #808080;
+	    color: #fff;
+	    border-radius: 0 5px 5px 0; /* 오른쪽 부분을 둥글게 만듦 */
+	    cursor: pointer;
+	    transition: background-color 0.3s ease; /* 배경색 변화에 애니메이션 추가 */
+	    padding: 0 20px;
+	    }
+	    
+	    #searchbar input[type="submit"]:hover {
+	    background-color: #000000; /* 호버 상태일 때 배경색 변경 */
+		}
+
+		/* 최상단으로 이동하는 버튼 스타일 */
+		.scroll-top {
+		    position: fixed;
+		    bottom: 60px; /* 버튼위치 조절 */
+		    right: 50px;
+		    width: 35px; /* 버튼크기 조절 */
+   			height: 35px;
+		    background-color: #ffffff;
+		    color: #000000;
+		    padding: 10px 20px;
+		    border-radius: 5px;
+		    display: none; /* 초기에는 숨김 */
+		    border: 2px solid #000000;
+		}
+		/* 스크롤 시 버튼 나타내기 */
+		:target .scroll-to-top {
+		    display: block;
+		}
+		.scroll-top a {
+		    color: #000000;
+		    text-decoration: none;
+		}
+		
+		/* 지역 버튼 스타일 */
+		#toggleRegions {
+		    background-color: #808080;
+		    color: #fff;
+		    border: none;
+		    border-radius: 5px;
+		    padding: 10px 20px;
+		    cursor: pointer;
+		    transition: background-color 0.3s ease;
+		}
+		
+		#toggleRegions:hover {
+		    background-color: #000000;
+		}
+		
+		/* 지역 상자 스타일 */
+		#regions {
+		    width: 400px;
+   			height: 30px;
+		    margin: 0 auto;
+		    border-collapse: collapse;
+		    border: 1px solid #ccc;
+		    display: table;
+		    text-align: center;
+		}
+		
+		#regions td {
+		    padding: 10px;
+		    text-align: left;
+		    border-bottom: 1px solid #ccc;
+		}
+		
+		/*  상품정보 탭 표시*/
+		
+		#useInfo:hover, #selInfo:hover, #useReview:hover, #questAn:hover {
+		    cursor: pointer;
+		    text-decoration: underline;
+		}
+		
+		#useInfo.active, #selInfo.active, #useReview.active, #questAn.active {
+		    border-bottom: 2px solid black;
+		}
+		
+		/*  예매테이블 표시*/
+		
+		
+		.TicketTable {
+		    position: fixed;
+		    top: 200px;
+		    right: 20px;
+		    background-color: #ffffff;
+		    border: 1px solid #ccc;
+		    border-collapse: collapse;
+		    z-index: 1; /* 다른 요소 위에 나타나도록 설정 */
+		}
+		
+		/*  input number 증감버튼 표시안함*/
+		
+		input::-webkit-inner-spin-button {
+			appearance: none;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+		}
+		
+		/*  링크 스타일 */
+	    a {
+	        text-decoration: none; /* 밑줄 제거 */
+	        font-weight: bold;
+	        font-size: 105%;
+	        color: #000000;
+	    }
+	    
+	    /* 팝업 창 외에 선택불가 필름 */
+	    #popWindow {
+	        position:absolute;
+	        display:none;
+	        background-color:#FFFFFF;
+	        left:40%;
+	        top:10%;
+	    }
+	
+	  	#protectionFilm {
+	    	display:none;
+	    	position:absolute;
+	    	background-color:rgba(0, 0, 0, 0.2);
+	    	top:0px;
+	    	left:0px;
+	    	width:100vw;
+	    	height:100vh;
+	    }
+
+
+	
+	    #closeBtn {
+	        position:absolute;
+	        width:24px;
+	        z-index:1;
+	        margin-left:-16px;
+	        margin-top:-8px;
+	    }
+
+
+
+	    #popBottom {
+	        height:28px;
+	        text-align:left;
+	        font-weight:bold;
+	        color:#FFFFFF;
+	        padding-left:10px;
+	        padding-right:10px;
+	    }
+
+		
+		

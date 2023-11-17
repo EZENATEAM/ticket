@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper.Reservation">
+	<insert id="insert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idx" >
+		insert into Reservation
+			 ( wDate, person, stat, eIdx, uIdx ) 
+		 values
+		<foreach collection="list" item="item" separator=",">
+			 ( now(), #{item.person}, #{item.stat}, #{item.eIdx}, #{item.uIdx} )
+		</foreach>
+	</insert>
+	<select id="select" parameterType="Long" resultType="rawVo" >
+		SELECT * FROM Reservation WHERE idx = #{idx}
+	</select>
+	<update id="update" parameterType="rawVo">
+		UPDATE Reservation
+		<set>
+			<if test='wDate eq null and wDate eq ""'>
+				wDate = now(),
+			</if>
+			<if test='wDate neq null and wDate neq ""'>
+				wDate = #{wDate},
+			</if>
+			<if test='person neq null and person neq ""'>
+				person = #{person},
+			</if>
+			<if test='stat neq null and stat neq ""'>
+				stat = #{stat},
+			</if>
+			<if test='eIdx neq null and eIdx neq ""'>
+				eIdx = #{eIdx},
+			</if>
+			<if test='uIdx neq null and uIdx neq ""'>
+				uIdx = #{uIdx},
+			</if>
+		</set>
+		 WHERE
+			 idx = #{idx}
+	</update>
+	<delete id="delete" parameterType="Long">
+		DELETE FROM Reservation WHERE idx = #{idx}
+	</delete>
+	<delete id="deleteAll" parameterType="Map">
+		DELETE FROM Reservation WHERE eIdx = #{eIdx} and uIdx = #{uIdx}
+	</delete>
+	<select id="list" parameterType="Map" resultType="rawVo" >
+		SELECT * FROM Reservation WHERE eIdx = #{eIdx} and uIdx = #{uIdx}
+	</select>
+</mapper>
